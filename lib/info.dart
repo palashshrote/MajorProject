@@ -27,6 +27,7 @@ class _InfoPageState extends State<InfoPage> {
         title: const Text('Accident Detection'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Center(
             child: Text(
@@ -34,11 +35,11 @@ class _InfoPageState extends State<InfoPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
-                color: Colors.purple,
+                color: Colors.cyan,
               ),
             ),
           ),
-          _signOutButton(),
+          // _signOutButton(),
         ],
       ),
     );

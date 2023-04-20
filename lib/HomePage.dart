@@ -5,6 +5,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'accident.dart';
 import 'auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +18,11 @@ class _HomePageState extends State<HomePage> {
   final _streamSubscriptions = <StreamSubscription<dynamic>>[];
   Future<void> signOut() async {
     await Auth().signOut();
+  }
+
+  final User? user = Auth().currentUser;
+  Widget _userUid() {
+    return Text(user?.email ?? 'User email');
   }
 
   Widget _signOutButton() {
@@ -54,12 +60,22 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Text('Accelerometer: $accelerometer'),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Text('Accelerometer: $accelerometer'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Signed in by- '),
+                    _userUid(),
+                  ],
+                ),
                 _signOutButton(),
               ],
             ),

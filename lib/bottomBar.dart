@@ -16,6 +16,7 @@ class _MyBottomBarState extends State<MyBottomBar> {
     HomePage(),
     AccidentButtonPage(),
     InfoPage(),
+    // SettingsPage(),
     // BluetoothPage(),
   ];
 

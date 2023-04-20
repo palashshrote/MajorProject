@@ -8,7 +8,9 @@ import 'package:geocoding/geocoding.dart';
 // import 'package:telephony/telephony.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'auth.dart';
+import 'package:accident_detection/auth.dart';
+
+import 'SettingsPage.dart';
 
 class AccidentButtonPage extends StatefulWidget {
   const AccidentButtonPage({super.key});
@@ -63,9 +65,9 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
     String loc = location;
     List<String> num = ["8089374989"];
     for (int i = 0; i < num.length; i++) {
-      // msgnumber(num[i], loc, address);
+      msgnumber(num[i], loc, address);
     }
-    //msgnumber(num, loc, address);
+    // msgnumber(num, loc, address);
     setState(() {});
   }
 
@@ -76,6 +78,18 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
   void startTimer() {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+  }
+
+  void resetTime() {
+    myDuration = const Duration(seconds: 10);
+  }
+
+  void inc10() {
+    myDuration = Duration(seconds: myDuration.inSeconds + 10);
+  }
+
+  void dec10() {
+    myDuration = Duration(seconds: myDuration.inSeconds - 10);
   }
 
   void stopTimer() {
@@ -109,12 +123,12 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar2);
   }
 
-  // void msgnumber(String number, String location, String address) {
-  //   telephony.sendSms(
-  //     to: number,
-  //     message: "Emergency! Accident detected!\n$location\nCoordinate: $address",
-  //   );
-  // }
+  void msgnumber(String number, String location, String address) {
+    // telephony.sendSms(
+    //   to: number,
+    //   message: "Emergency! Accident detected!\n$location\nCoordinate: $address",
+    // );
+  }
   Future<void> signOut() async {
     await Auth().signOut();
   }
@@ -141,9 +155,6 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
           //Text(location, style: const TextStyle(fontSize: 15)
           //),
           //Text('${address}'),
-
-          const Text("Click Button to trigger accident",
-              style: TextStyle(fontSize: 20)),
 
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -195,8 +206,35 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
               ),
             ),
           ),
-
-          _signOutButton(),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                resetTime();
+              });
+            },
+            child: Text(
+              'Reset',
+            ),
+          ),
+          // _signOutButton(),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsPage(
+                    init_time: seconds,
+                    updated_time: (String updated_time) {
+                      setState(() {
+                        myDuration = Duration(seconds: int.parse(updated_time));
+                      });
+                    },
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ]),
       ),
     );
