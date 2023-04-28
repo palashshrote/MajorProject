@@ -1,15 +1,9 @@
 import 'dart:async';
-import 'dart:math';
-// ignore: depend_on_referenced_packages
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-// import 'package:telephony/telephony.dart';
-import 'package:sensors_plus/sensors_plus.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:accident_detection/auth.dart';
-
+import 'package:telephony/telephony.dart';
+import 'auth.dart';
 import 'SettingsPage.dart';
 
 class AccidentButtonPage extends StatefulWidget {
@@ -24,9 +18,15 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
   String address = "address";
 
   String message = "";
-  // final telephony = Telephony.instance;
+  final telephony = Telephony.instance;
 
-  // gelocator code start
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  // geolocator code start
   Future<Position> _getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -52,23 +52,18 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
     return await Geolocator.getCurrentPosition();
   }
 // locator code ends
-
-  Future<void> GetAddressFromLatLong(Position position, String location) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+  Future<void> GetAddressFromLatLong(Position position, String location)async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
     print(placemarks);
     Placemark place = placemarks[0];
-    //String? street = place.street;
-    // remove space from street name
-    address =
-        '${place.street}, ${place.locality}, ${place.postalCode}, ${place.administrativeArea}, ${place.country}';
+    address = '${place.street}, ${place.locality}, ${place.postalCode}, ${place.administrativeArea}, ${place.country}';
     String loc = location;
-    List<String> num = ["8089374989"];
-    for (int i = 0; i < num.length; i++) {
+    List<String> num = ["9673534092"];
+    for(int i=0;i<num.length; i++){
       msgnumber(num[i], loc, address);
     }
-    // msgnumber(num, loc, address);
-    setState(() {});
+    setState(()  {
+    });
   }
 
   Timer? countdownTimer;
@@ -80,17 +75,7 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
 
-  void resetTime() {
-    myDuration = const Duration(seconds: 10);
-  }
 
-  void inc10() {
-    myDuration = Duration(seconds: myDuration.inSeconds + 10);
-  }
-
-  void dec10() {
-    myDuration = Duration(seconds: myDuration.inSeconds - 10);
-  }
 
   void stopTimer() {
     setState(() => countdownTimer!.cancel());
@@ -110,10 +95,18 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
     });
   }
 
-  void timerfinished() async {
+  void timerfinished() async{
     Position position = await _getGeoLocationPosition();
-    location = 'Lat: ${position.latitude}, Long: ${position.longitude}';
+    location = 'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}';
     GetAddressFromLatLong(position, location);
+    dispose();
+  }
+
+  @override
+  void dispose() {
+    // _timer.cancel();
+    stopTimer();
+    super.dispose();
   }
 
   void showSMSsent() {
@@ -123,12 +116,12 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar2);
   }
 
-  void msgnumber(String number, String location, String address) {
-    // telephony.sendSms(
-    //   to: number,
-    //   message: "Emergency! Accident detected!\n$location\nCoordinate: $address",
-    // );
-  }
+   void msgnumber(String number, String location, String address) {
+     telephony.sendSms(
+       to: number,
+       message: "Emergency! Accident detected!\n$location\nCoordinate: $address",
+     );
+   }
   Future<void> signOut() async {
     await Auth().signOut();
   }
@@ -139,6 +132,8 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
       child: const Text('Sign out'),
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +151,9 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
           //),
           //Text('${address}'),
 
+          const Text("Click Button to trigger accident",
+              style: TextStyle(fontSize: 20)),
+
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
@@ -170,9 +168,6 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar1);
 
-              //Position position = await _getGeoLocationPosition();
-              //location = 'Lat: ${position.latitude}, Long: ${position.longitude}';
-              //GetAddressFromLatLong(position, location);
             },
             child: const Text('Trigger Accident'),
           ),
@@ -206,17 +201,8 @@ class _AccidentButtonPageState extends State<AccidentButtonPage> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                resetTime();
-              });
-            },
-            child: Text(
-              'Reset',
-            ),
-          ),
-          // _signOutButton(),
+
+          _signOutButton(),
           IconButton(
             onPressed: () {
               Navigator.push(
