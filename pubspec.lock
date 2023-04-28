@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  background_sms:
+    dependency: "direct main"
+    description:
+      name: background_sms
+      sha256: "680edd2b7c4e487c2799e337d40ed166158ba15369eb0578ac804c3aa1845226"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -89,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  circular_countdown_timer:
+    dependency: "direct main"
+    description:
+      name: circular_countdown_timer
+      sha256: "9ba5fbc076cedbcbf6190ed86762e679f43d7c67cdd903ea34df059dabdc08d4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   clock:
     dependency: transitive
     description:
@@ -205,17 +221,17 @@ packages:
     dependency: transitive
     description:
       name: fixnum
-      sha256: "04be3e934c52e082558cc9ee21f42f5c1cd7a1262f4c63cd0357c08d5bba81ec"
+      sha256: "25517a4deb0c03aa0f32fd12db525856438902d9c16536311e76cdc57b31d7d1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
   flutter_blue:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_blue
       sha256: f7f76b9b80455b0375693ec96c276fadb01e94d8441fa1740a64980cd1aeda5c
@@ -244,10 +260,26 @@ packages:
     dependency: "direct main"
     description:
       name: geocoding
-      sha256: "26218460a902d4249b81e6baf9d55ce400fd1ebe6fc0a7e92b2c12b0b8e1e14e"
+      sha256: b34c0501bbbaf3190b85bef3078b27cf66c28a8915c6d3af50d67f356aa7da31
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.5"
+    version: "2.1.0"
+  geocoding_android:
+    dependency: transitive
+    description:
+      name: geocoding_android
+      sha256: "5a1fc0cec9b0497b44ca31c1fa8d1c891f3aded1053e6bb2eac075d3bd1bf046"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  geocoding_ios:
+    dependency: transitive
+    description:
+      name: geocoding_ios
+      sha256: c85495ce8fb34e4fbd2dd8fc5f79263d622d9f88c4af948c965daf6b27a7f3a1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   geocoding_platform_interface:
     dependency: transitive
     description:
@@ -268,18 +300,18 @@ packages:
     dependency: transitive
     description:
       name: geolocator_android
-      sha256: fe90565c3a8789dc3b433d8f95cdb18343f9bde298a419d978337ba1ae1037d3
+      sha256: "2ba24690aee0a3e1b6b7bd47c2711a50c874e95e4c758346589d35194adf6d6a"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.4"
+    version: "4.1.7"
   geolocator_apple:
     dependency: transitive
     description:
       name: geolocator_apple
-      sha256: "567cf6d9879b4c33b2bd8bbfff0995e75c62a14f87b1480c8522c5dca5d3b166"
+      sha256: "22b60ca3b8c0f58e6a9688ff855ee39ab813ca3f0c0609a48d282f6631266f2e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
+    version: "2.2.5"
   geolocator_platform_interface:
     dependency: transitive
     description:
@@ -436,10 +468,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: dbf0f707c78beedc9200146ad3cb0ab4d5da13c246336987be6940f026500d3a
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   process:
     dependency: transitive
     description:
@@ -521,10 +553,18 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "33b31b6beb98100bf9add464a36a8dd03eb10c7a8cf15aeec535e9b054aaf04b"
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
+  telephony:
+    dependency: "direct main"
+    description:
+      name: telephony
+      sha256: "821e074acec3c611e48edadd50a6d9fef864943771a545da7924adcc8509ada9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   term_glyph:
     dependency: transitive
     description:
@@ -582,5 +622,5 @@ packages:
     source: hosted
     version: "1.0.0"
 sdks:
-  dart: ">=2.18.5 <3.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.3.0"
